@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
@@ -14,7 +13,7 @@ class ArticleController extends Controller
         return Article::paginate(10);
     }
 
-    public function store(StoreArticleRequest $request)
+    public function store(ArticleRequest $request)
     {
         $result = Article::create($request->all());
 
@@ -26,7 +25,7 @@ class ArticleController extends Controller
         }
     }
 
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
         $result = $article->update($request->all());
 

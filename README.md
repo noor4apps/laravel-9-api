@@ -14,3 +14,5 @@
     php artisan make:request UpdateArticleRequest
 
 #### 2.4 build Controller resource
+
+### 3 release StoreArticleRequest & UpdateArticleRequest with ArticleRequest
