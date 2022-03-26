@@ -16,3 +16,5 @@
 #### 2.4 build Controller resource
 
 ### 3 release StoreArticleRequest & UpdateArticleRequest with ArticleRequest
+
+### 4 add data to JsonResponse in ArticleController

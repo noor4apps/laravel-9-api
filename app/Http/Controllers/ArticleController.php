@@ -18,10 +18,10 @@ class ArticleController extends Controller
         $result = Article::create($request->all());
 
         if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article created successfully'], 200);
+            return response()->json(['status' => 'success', 'message' => 'Article created successfully', 'data' => $result], 200);
 
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Article not created'], 405);
+            return response()->json(['status' => 'error', 'message' => 'Article not created', 'data' => []], 405);
         }
     }
 
@@ -30,10 +30,10 @@ class ArticleController extends Controller
         $result = $article->update($request->all());
 
         if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article updated successfully'], 200);
+            return response()->json(['status' => 'success', 'message' => 'Article updated successfully', 'data' => $result], 200);
 
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Article not updated'], 405);
+            return response()->json(['status' => 'error', 'message' => 'Article not updated', 'data' => []], 405);
         }
     }
 
@@ -42,10 +42,10 @@ class ArticleController extends Controller
         $result = $article->delete();
 
         if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article deleted successfully'], 200);
+            return response()->json(['status' => 'success', 'message' => 'Article deleted successfully', 'data' => []], 200);
 
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Article not deleted'], 405);
+            return response()->json(['status' => 'error', 'message' => 'Article not deleted', 'data' => []], 405);
         }
     }
 }
