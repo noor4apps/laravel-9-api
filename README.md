@@ -23,3 +23,11 @@
     php artisan make:resource ArticleResource
     php artisan make:resource ArticleCollection
     php artisan make:resource UserResource
+
+### 6 Laravel Sanctum: authentication
+#### 6.1 you should add Sanctum's middleware to your api middleware group within your app/Http/Kernel.php file.
+This middleware is responsible for ensuring that incoming requests from your SPA can authenticate using Laravel's session cookies, while still allowing requests from third parties or mobile applications to authenticate using API tokens
+
+#### 6.2 your User model should use the Laravel\Sanctum\HasApiTokens trait
+
+#### 6.3  make AuthController

@@ -13,7 +13,7 @@ class ArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -26,7 +26,7 @@ class ArticleRequest extends FormRequest
         return [
             'title' => 'required|string',
             'content' => 'required|string',
-            'user_id' => 'required|numeric|exists:users,id',
+//            'user_id' => 'required|numeric|exists:users,id',
         ];
     }
 }

@@ -20,33 +20,45 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request)
     {
-        $result = Article::create($request->all());
+//        $request->merge(['user_id' => auth()->user()->id]);
+//        $result = Article::create($request->all());
 
-        if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article created successfully', 'data' => new ArticleResource($result)], 200);
+        $article = auth()->user()->articles()->create($request->all());
+
+        if ($article) {
+            return response()->json(['status' => 'success', 'message' => 'Article created successfully', 'data' => new ArticleResource($article->load('user'))], 200);
 
         } else {
             return response()->json(['status' => 'error', 'message' => 'Article not created', 'data' => []], 405);
         }
     }
 
-    public function update(ArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request, $article)
     {
-        $result = $article->update($request->all());
+//        $result = $article->update($request->all());
+        $article = auth()->user()->articles()->find($article);
 
-        if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article updated successfully', 'data' => new ArticleResource($result)], 200);
+        if (!$article) {
+            return response()->json(['status' => 'error', 'message' => 'Article Not Found', 'data' => []], 404);
+        }
+
+        if ($article->update($request->all())) {
+            return response()->json(['status' => 'success', 'message' => 'Article updated successfully', 'data' => new ArticleResource($article->load('user'))], 200);
 
         } else {
             return response()->json(['status' => 'error', 'message' => 'Article not updated', 'data' => []], 405);
         }
     }
 
-    public function destroy(Article $article)
+    public function destroy($article)
     {
-        $result = $article->delete();
+        $article = auth()->user()->articles()->find($article);
 
-        if ($result) {
+        if (!$article) {
+            return response()->json(['status' => 'error', 'message' => 'Article Not Found', 'data' => []], 404);
+        }
+
+        if ($article->delete()) {
             return response()->json(['status' => 'success', 'message' => 'Article deleted successfully', 'data' => []], 200);
 
         } else {
