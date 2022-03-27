@@ -65,4 +65,10 @@ class ArticleController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Article not deleted', 'data' => []], 405);
         }
     }
+
+    public function user_articles()
+    {
+        $articles = auth()->user()->articles()->with('user:id,name')->paginate(10);
+        return new ArticleCollection($articles);
+    }
 }

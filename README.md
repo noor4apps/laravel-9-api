@@ -31,3 +31,5 @@ This middleware is responsible for ensuring that incoming requests from your SPA
 #### 6.2 your User model should use the Laravel\Sanctum\HasApiTokens trait
 
 #### 6.3  make AuthController
+
+### 7 
