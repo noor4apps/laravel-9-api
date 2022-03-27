@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleRequest;
+use App\Http\Resources\ArticleCollection;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
@@ -10,7 +12,10 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return Article::paginate(10);
+        $articles = Article::with('user:id,name')->paginate(10);
+
+//        return  ArticleResource::collection($articles);
+        return new ArticleCollection($articles);
     }
 
     public function store(ArticleRequest $request)
@@ -18,7 +23,7 @@ class ArticleController extends Controller
         $result = Article::create($request->all());
 
         if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article created successfully', 'data' => $result], 200);
+            return response()->json(['status' => 'success', 'message' => 'Article created successfully', 'data' => new ArticleResource($result)], 200);
 
         } else {
             return response()->json(['status' => 'error', 'message' => 'Article not created', 'data' => []], 405);
@@ -30,7 +35,7 @@ class ArticleController extends Controller
         $result = $article->update($request->all());
 
         if ($result) {
-            return response()->json(['status' => 'success', 'message' => 'Article updated successfully', 'data' => $result], 200);
+            return response()->json(['status' => 'success', 'message' => 'Article updated successfully', 'data' => new ArticleResource($result)], 200);
 
         } else {
             return response()->json(['status' => 'error', 'message' => 'Article not updated', 'data' => []], 405);

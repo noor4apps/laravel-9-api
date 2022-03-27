@@ -15,6 +15,11 @@
 
 #### 2.4 build Controller resource
 
-### 3 release StoreArticleRequest & UpdateArticleRequest with ArticleRequest
+### 3 replace StoreArticleRequest & UpdateArticleRequest with ArticleRequest
 
 ### 4 add data to JsonResponse in ArticleController
+
+### 5 Generating Resources and Conditional Relationships
+    php artisan make:resource ArticleResource
+    php artisan make:resource ArticleCollection
+    php artisan make:resource UserResource
