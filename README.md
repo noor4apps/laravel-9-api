@@ -32,4 +32,6 @@ This middleware is responsible for ensuring that incoming requests from your SPA
 
 #### 6.3  make AuthController
 
-### 7 
+### 7 Listing user Articles resources
+
+### 8 Formatting the return response in AuthController and added endpoint register
