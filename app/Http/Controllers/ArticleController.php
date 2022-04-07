@@ -14,39 +14,38 @@ class ArticleController extends Controller
     {
         $articles = Article::with('user:id,name')->paginate(10);
 
-//        return  ArticleResource::collection($articles);
-        return new ArticleCollection($articles);
+        if ($articles) {
+            return new ArticleCollection($articles);
+        } else {
+            return response()->api([], 1, 'something went wrong!');
+        }
     }
 
     public function store(ArticleRequest $request)
     {
-//        $request->merge(['user_id' => auth()->user()->id]);
-//        $result = Article::create($request->all());
-
         $article = auth()->user()->articles()->create($request->all());
 
         if ($article) {
-            return response()->json(['status' => 'success', 'message' => 'Article created successfully', 'data' => new ArticleResource($article->load('user'))], 200);
+            return response()->api(new ArticleResource($article->load('user')), 0,'Article created successfully');
 
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Article not created', 'data' => []], 405);
+            return response()->api([], 1, 'Article not created');
         }
     }
 
     public function update(ArticleRequest $request, $article)
     {
-//        $result = $article->update($request->all());
         $article = auth()->user()->articles()->find($article);
 
         if (!$article) {
-            return response()->json(['status' => 'error', 'message' => 'Article Not Found', 'data' => []], 404);
+            return response()->api([], 1, 'Article Not Found');
         }
 
         if ($article->update($request->all())) {
-            return response()->json(['status' => 'success', 'message' => 'Article updated successfully', 'data' => new ArticleResource($article->load('user'))], 200);
+            return response()->api(new ArticleResource($article->load('user')), 0, 'Article updated successfully');
 
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Article not updated', 'data' => []], 405);
+            return response()->api([], 1, 'Article not updated');
         }
     }
 
@@ -55,20 +54,25 @@ class ArticleController extends Controller
         $article = auth()->user()->articles()->find($article);
 
         if (!$article) {
-            return response()->json(['status' => 'error', 'message' => 'Article Not Found', 'data' => []], 404);
+            return response()->api([], 1, 'Article Not Found');
         }
 
         if ($article->delete()) {
-            return response()->json(['status' => 'success', 'message' => 'Article deleted successfully', 'data' => []], 200);
+            return response()->api([], 0, 'Article deleted successfully');
 
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Article not deleted', 'data' => []], 405);
+            return response()->api([], 1, 'Article not deleted');
         }
     }
 
     public function user_articles()
     {
         $articles = auth()->user()->articles()->with('user:id,name')->paginate(10);
-        return new ArticleCollection($articles);
+
+        if ($articles) {
+            return new ArticleCollection($articles);
+        } else {
+            return response()->api([], 1, 'something went wrong!');
+        }
     }
 }
